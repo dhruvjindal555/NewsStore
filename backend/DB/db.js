@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+require('dotenv').config()
+const url = process.env.MONGO_URL
 async function connectToDatabse() {
-    let url = `mongodb+srv://dhruvjindal546:vjDHRJDh8R1xVg8S@cluster0.okba56z.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+
     try {
         await mongoose.connect(url).then(() => {
             console.log("Successfully Connected to Database")
