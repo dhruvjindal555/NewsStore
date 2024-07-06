@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import News from './News'
 import Results from './Results'
 import Spinner from './Spinner'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import toast, { Toaster } from 'react-hot-toast';
+
 function LatestNews() {
     const [loading, setLoading] = useState(false)
-    const [page] = useState(1)
+    const [page,setPage] = useState(1)
     const [totalResults, setTotalResults] = useState(1)
     const apiKey = process.env.REACT_APP_API_KEY
     const [categories] = useState(["General",
@@ -33,24 +33,24 @@ function LatestNews() {
         fetchQuery(search)
     }
     const [articles, setArticles] = useState([])
-    useEffect(() => {
-        const fetchArticles = async () => {
-            let url = `https://newsapi.org/v2/top-headlines?country=in&category=${category}&apiKey=${apiKey}&page=${page}&pageSize=20`
-            setLoading(true)
-            setSearch("")
-            const response = await fetch(url)
-            const parsedData = await response.json()
-            if (!parsedData.articles) {
-                console.log(parsedData);
-            }
-            console.log(url);
-            setTotalResults(parsedData.totalResults)
-            console.log(parsedData.articles)
-            setArticles(parsedData.articles)
-            setLoading(false)
+    const fetchArticles = async () => {
+        let url = `https://newsapi.org/v2/top-headlines?country=in&category=${category}&apiKey=${apiKey}&page=${page}&pageSize=20`
+        setLoading(true)
+        setSearch("")
+        const response = await fetch(url)
+        const parsedData = await response.json()
+        if (!parsedData.articles) {
+            console.log(parsedData);
         }
+        console.log(url);
+        setTotalResults(parsedData.totalResults)
+        console.log(parsedData.articles)
+        setArticles(parsedData.articles)
+        setLoading(false)
+    }
+    useEffect(() => {
         fetchArticles()
-    }, [category,apiKey,page])
+    }, [category, apiKey, page])
     const fetchQuery = async () => {
         setCategory("General")
         let url = `https://newsapi.org/v2/everything?&q=${search}&apiKey=${apiKey}&page=${page}&pageSize=20`
@@ -64,24 +64,30 @@ function LatestNews() {
         console.log(parsedData.articles)
         setArticles(parsedData.articles)
     }
-
+    const handlePrevClick=()=>{
+        setPage(page-1)
+        if(search === ""){
+            fetchArticles()
+        }else{
+            fetchQuery()
+        }
+    }
+    const handleNextClick=()=>{
+        setPage(page+1)
+        console.log("Search",search);
+        if(search === ""){
+            fetchArticles()
+        }else{
+            fetchQuery()
+        }
+    }
     return (
         <>
             <div className='mx-28'>
                 <div>
-                    <ToastContainer
-                        position="top-right"
-                        autoClose={5000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                        theme="light"
-                        transition="Bounce"/>
-                    <ToastContainer />
+                    <Toaster position="top-center"
+                        reverseOrder={false}
+                        gutter={8} />
                 </div>
                 <div className='my-8'>
                     <h1 className='text-5xl font-semibold'>Latest news - {category}</h1>
@@ -91,7 +97,8 @@ function LatestNews() {
                         {
                             categories.map((element, index) => {
                                 return (
-                                    <div key={index} onClick={handleCategory} className='h-fit rounded-xl border-2 border-black active:border-gray-500 px-3 py-1 flex items-center cursor-pointer hover:border-gray-500'>
+                                    <div key={index} onClick={handleCategory} className='h-fit rounded-xl border-2 border-black active:border-gray-500 px-3 py-1 flex items-center cursor-pointer hover:border-gray-500
+                                    dark:text-white dark:border-gray-800'>
                                         <span>
                                             {element}
                                         </span>
@@ -110,7 +117,7 @@ function LatestNews() {
                                     handleSearch()
                                 }
                             }}
-                            className=" outline-none bg-white text-gray-600 text-sm px-4 py-3" />
+                            className="outline-none bg-gray-200 text-gray-600 text-sm px-4 py-3" />
                         <button
                             onClick={handleSearch} type='button' className="flex items-center justify-center bg-[#000000] px-5">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904" width="16px" className="fill-white">
@@ -131,6 +138,10 @@ function LatestNews() {
                         <News articles={articles} />
                     </>
                 }
+                <div className='d-flex justify-content-between mt-3 mx-5'>
+                    <button disabled={page <= 1} type="button" className="btn btn-dark" onClick={handlePrevClick}>Previous</button>
+                    <button disabled={page + 1 > Math.ceil(totalResults / 20)} type="button" className="btn btn-dark" onClick={handleNextClick}>Next</button>
+                </div>
             </div>
         </>
     )

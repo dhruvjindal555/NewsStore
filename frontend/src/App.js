@@ -3,7 +3,7 @@ import LatestNews from "./Components/LatestNews";
 import LogIn from "./Components/LogIn";
 import Navbar from "./Components/Navbar";
 import SignUp from "./Components/SignUp";
-import React from "react";
+import React,{useState} from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -13,6 +13,7 @@ function App() {
   return (
     <>
       <Router>
+        <div className="bg-my-gradient-1 dark:bg-my-gradient-2 min-h-screen">
         <Navbar />
         <Routes>
           <Route element={<SignUp/>} path="/SignUp"></Route>
@@ -20,6 +21,7 @@ function App() {
           <Route element={<LatestNews/>} path="/" />
           <Route element={<Favourites/>} path="/favourites" />
         </Routes>
+        </div>
         
       </Router>
     </>

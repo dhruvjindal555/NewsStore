@@ -1,55 +1,52 @@
 import React from 'react'
+import toast, { Toaster } from 'react-hot-toast';
 
-function FavouriteItem({ article ,getFavourite}) {
-    const removeFromFavourites=async ()=>{
+function FavouriteItem({ article, getFavourite }) {
+    const removeFromFavourites = async () => {
         const url = `http://localhost:8888/favourites/remove/${article._id}`
-        const response = await fetch(url,{
+        const response = await fetch(url, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                "authToken":localStorage.getItem('authToken')
+                "authToken": localStorage.getItem('authToken')
             },
-            
+
         })
         const data = await response.json()
-        if(data.success){
-            alert("Article removed")
+        if (data.success) {
+            toast("Article removed")
             getFavourite()
-        }else{
-            alert(data.message)
+        } else {
+            toast(data.message)
         }
     }
     const heading = article.title
-    const headingArray = heading.split(' ')
+    const description = article.description
 
-    // const today = Date.now()
-    // const onDate =new Date(today - new Date(Date.parse(article.publishedAt))).getHours()
     const onDate = new Date(Date.parse(article.publishedAt)).toDateString()
     return (
         <>
-            <div className='light '>
-                
-                <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <a href="/">
-                        <img className="rounded-t-lg aspect-video h-48" src={article.urlToImage ? article.urlToImage : "noImage.jpg"} alt="" />
-                    </a>
-                    <div className="p-5">
+            <div  className=' relative' key={article.url}>
+                <Toaster position="top-center"
+                    reverseOrder={false}
+                    gutter={8} />
+                <div className="max-w-sm bg-transparent border border-gray-400 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
+                    <div onClick={removeFromFavourites} className='border-2 absolute top-2 right-3 p-1 px-2 bg-white rounded-full hover:border-gray-500 hover:border-2 cursor-pointer'>
+                        <i className="fa-solid fa-xmark fa-xl " style={{ "color": "#d42b2b" }}></i>
+                    </div>
+                    <div >
+                        <img className="rounded-t-lg aspect-video h-48 " src={article.urlToImage ? article.urlToImage : "noImage.jpg"} alt="" />
+                    </div>
+                    <div className="p-5 h-screen/2 flex flex-col justify-between">
                         <a href="/">
-                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{
-                                headingArray.map((word, index) => {
-                                    if (index <= 10) {
-                                        return word
-                                    }
-                                    else {
-                                        return ""
-                                    }
-                                }).join(' ') + "..."}</h5>
+                            <h5 className=" text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{
+                                heading.slice(0, 60) + "..."}</h5>
                         </a>
                         <div>
-                            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{article.description}</p>
-                            <p>On {onDate}</p>
+                            <p className=" font-normal text-gray-700 dark:text-gray-400">{description ? description.slice(0,90)+"..." : "No description available"}</p>
                         </div>
-                        <div>
+                        <div className='text-sm text-gray-500 dark:text-gray-400'>
+                            <p>On {onDate}</p>
                             <p>Source :{article.source.name}</p>
                             <p>Author :{article.author}</p>
                         </div>
@@ -59,13 +56,8 @@ function FavouriteItem({ article ,getFavourite}) {
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                             </svg>
                         </a>
-                        <div onClick={removeFromFavourites} target='blank' className="cursor-pointer inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            Remove from favourites
-                            <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </div>
                         
+
                     </div>
                 </div>
             </div>

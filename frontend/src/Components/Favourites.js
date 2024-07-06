@@ -1,13 +1,13 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import FavouriteItem from './FavouriteItem'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import toast, { Toaster } from 'react-hot-toast';
+import Results from './Results';
+
 function Favourites() {
     const [articles, setArticles] = useState([])
     const getFavourite = async () => {
         if (!localStorage.getItem('authToken')) {
-            toast("Please login to view your favourites")
-            return
+            return toast("Please login to view your favourites")
         }
         const url = `http://localhost:8888/favourites`
         const response = await fetch(url, {
@@ -20,7 +20,7 @@ function Favourites() {
         const data = await response.json()
         if (data.success) {
             setArticles(data.articles)
-            toast("Articles fetched successfully")
+            // toast("Articles fetched successfully")
             console.log(data.articles)
         } else {
             console.log(data.message)
@@ -34,24 +34,15 @@ function Favourites() {
 
     return (
         <div className='mx-28'>
-            <ToastContainer
-                        position="top-right"
-                        autoClose={5000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                        theme="light"
-                        transition="Bounce"/>
-                    <ToastContainer />
+            <Toaster position="top-center"
+                reverseOrder={false}
+                gutter={8} />
             <div className='my-8'>
                 <h1 className='text-5xl font-semibold'>Favourites</h1>
             </div>
             <div>
-                <div className='grid gap-3 grid-cols-4'>
+                <Results totalResults={articles.length}/>
+                <div className='grid gap-3 grid-cols-4 gap-y-5'>
                     {articles ? articles.map((article) => {
                         return (
                             <FavouriteItem key={article.url} article={article} getFavourite={getFavourite} />

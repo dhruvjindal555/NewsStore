@@ -5,7 +5,7 @@ function News({articles}) {
     
     return (
         <div>
-            <div className='grid gap-3 grid-cols-4'>
+            <div className='grid gap-3 grid-cols-4 gap-y-5'>
                 {articles?articles.map((article) => {
                     return (
                         <NewsItem key={article.url} article={article}/>

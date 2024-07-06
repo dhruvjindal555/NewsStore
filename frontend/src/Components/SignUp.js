@@ -41,7 +41,7 @@ function SignUp() {
         }
     }
     return (
-        <section className="bg-gray-50 dark:bg-gray-900 mt-12">
+        <section className=" mt-12">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
 
                 <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -73,7 +73,7 @@ function SignUp() {
                                     <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">I accept the <a className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="/">Terms and Conditions</a></label>
                                 </div>
                             </div> */}
-                            <button type="submit" className="hover:border-black hover:border-2 w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
+                            <button type="submit" className="dark:hover:border-gray-300 hover:border-black dark:border-2 dark:text-white dark:border-gray-500 border-2  hover:border-2 w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                 Already have an account? <Link to="/LogIn" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</Link>
                             </p>

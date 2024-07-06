@@ -1,7 +1,11 @@
 import React from 'react'
+import toast, { Toaster } from 'react-hot-toast';
 
 function NewsItem({ article }) {
     const addTofavourites = async () => {
+        if (!localStorage.getItem('authToken')) {
+            return toast("Try loggin in first")
+        }
         const url = `http://localhost:8888/favourites/add`
         const response = await fetch(url, {
             method: 'POST',
@@ -22,33 +26,35 @@ function NewsItem({ article }) {
         })
         const data = await response.json()
         if (data.success) {
-            alert("Article added to favourites")
+            toast("Article added to favourites")
         } else {
-            alert(data.message)
+            toast(data.message)
         }
     }
     const heading = article.title
+    const description = article.description
 
-    // const today = Date.now()
-    // const onDate =new Date(today - new Date(Date.parse(article.publishedAt))).getHours()
     const onDate = new Date(Date.parse(article.publishedAt)).toDateString()
     return (
         <>
-            <div className=' relative' key={article.url}>
-                <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div className=' relative ' >
+                <Toaster position="top-center"
+                    reverseOrder={false}
+                    gutter={8} />
+                <div className="max-w-sm  border border-gray-400 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
                     <div onClick={addTofavourites} className='border-2 absolute top-2 right-3 p-1 bg-white rounded-full hover:border-gray-500 hover:border-2 cursor-pointer'>
                         <i className="fa-regular fa-heart fa-xl " style={{ "color": "#d42b2b" }}></i>
                     </div>
                     <div >
-                        <img className="rounded-t-lg aspect-video h-48" src={article.urlToImage ? article.urlToImage : "noImage.jpg"} alt="" />
+                        <img className="rounded-t-lg aspect-video h-48 " src={article.urlToImage ? article.urlToImage : "noImage.jpg"} alt="" />
                     </div>
                     <div className="p-5 h-screen/2 flex flex-col justify-between">
                         <a href={article.url}>
                             <h5 className=" text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{
-                                heading.slice(0,60)+"..."}</h5>
+                                heading.slice(0, 60) + "..."}</h5>
                         </a>
                         <div>
-                            <p className=" font-normal text-gray-700 dark:text-gray-400">{article.description?article.description:"No description available"}</p>
+                            <p className=" font-normal text-gray-700 dark:text-gray-400">{description ? description.slice(0,90)+"..." : "No description available"}</p>
                         </div>
                         <div className=' text-sm text-gray-500 dark:text-gray-400' >
                             <p className=''>On {onDate}</p>

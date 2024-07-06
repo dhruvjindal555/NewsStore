@@ -1,12 +1,12 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast';
 import {
     Link,
     useNavigate
 } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import ToggleButton from './ToggleButton';
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
@@ -43,23 +43,13 @@ export default function Navbar() {
     }
     return (
         <div className=''>
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition="Bounce" />
-            <ToastContainer />
+            <Toaster position="top-center"
+                reverseOrder={false}
+                gutter={8} />
             <Disclosure as="nav" className="">
                 {({ open }) => (
                     <>
-                        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+                        <div className="mx-auto max-w-7xl ">
                             <div className="relative flex h-16 items-center justify-between">
                                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                                     {/* Mobile menu button*/}
@@ -74,12 +64,9 @@ export default function Navbar() {
                                     </DisclosureButton>
                                 </div>
                                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                                    <div className="flex flex-shrink-0 items-center">
-                                        <img
-                                            className="h-8 w-auto"
-                                            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                                            alt="Your Company"
-                                        />
+                                    <div className="flex flex-shrink-0 dark:text-white items-center">
+                                        <span className='text-3xl font-semibold'>NewsStore
+                                        </span>
                                     </div>
                                     <div className="hidden sm:ml-6 sm:block">
                                         <div className="flex space-x-4">
@@ -100,10 +87,10 @@ export default function Navbar() {
                                         </div>
                                     </div>
                                 </div>
+                                <ToggleButton />
                                 <div className='flex gap-2'>
-
                                     <div onClick={handleLogOut} className='cursor-pointer'>
-                                        <span className=' border-gray-400 border-2 rounded-md px-3 py-2 text-sm font-medium hover:border-2 hover:border-black' >{!localStorage.getItem('authToken') ? "LogIn/SignUp" : "Log out"}</span>
+                                        <span className='dark:hover:border-gray-700 dark:border-black border-gray-400 border-2 rounded-md px-3 py-2 text-sm font-medium hover:border-2 hover:border-black' >{!localStorage.getItem('authToken') ? "LogIn/SignUp" : "Log out"}</span>
                                     </div>
                                 </div>
                             </div>
