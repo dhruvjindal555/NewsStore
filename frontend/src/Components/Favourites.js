@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import FavouriteItem from './FavouriteItem'
 import toast, { Toaster } from 'react-hot-toast';
-import Results from './Results';
+import Pagination from './Pagination';
 
 function Favourites() {
     const [articles, setArticles] = useState([])
@@ -41,7 +41,6 @@ function Favourites() {
                 <h1 className='text-5xl font-semibold'>Favourites</h1>
             </div>
             <div>
-                <Results totalResults={articles.length}/>
                 <div className='grid gap-3 grid-cols-4 gap-y-5'>
                     {articles ? articles.map((article) => {
                         return (
@@ -49,6 +48,8 @@ function Favourites() {
                         )
                     }) : "ARTICLES NOT AVAILABLE"}
                 </div>
+                    {/* <Results totalResults={articles.length}/> */}
+                    <Pagination totalResults={articles.length}/>
             </div>
         </div>
     )
