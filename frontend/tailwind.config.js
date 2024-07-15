@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       height: {
-        'screen/2': '50vh',
+        'screen-55': '55vh',
       },
       backgroundImage: {
         'my-gradient-1': 'linear-gradient(90deg, hsla(176, 61%, 87%, 1) 0%, hsla(150, 54%, 86%, 1) 50%, hsla(301, 68%, 84%, 1) 100%)',

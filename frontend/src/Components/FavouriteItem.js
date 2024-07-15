@@ -27,7 +27,7 @@ function FavouriteItem({ article, getFavourite }) {
     return (
         <>
             <div  className=' relative' key={article.url}>
-                <Toaster position="top-center"
+                <Toaster position="top-center" 
                     reverseOrder={false}
                     gutter={8} />
                 <div className="max-w-sm bg-transparent border border-gray-400 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
@@ -35,9 +35,9 @@ function FavouriteItem({ article, getFavourite }) {
                         <i className="fa-solid fa-xmark fa-xl " style={{ "color": "#d42b2b" }}></i>
                     </div>
                     <div >
-                        <img className="rounded-t-lg aspect-video h-48 " src={article.urlToImage ? article.urlToImage : "noImage.jpg"} alt="" />
+                        <img className="rounded-t-lg aspect-video h-48 " src={article.urlToImage ? article.urlToImage : "noImageBlack.png"} alt="" />
                     </div>
-                    <div className="p-5 h-screen/2 flex flex-col justify-between">
+                    <div className="p-5 h-screen-55 flex flex-col justify-between">
                         <a href="/">
                             <h5 className=" text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{
                                 heading.slice(0, 60) + "..."}</h5>

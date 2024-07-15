@@ -13,8 +13,9 @@ function classNames(...classes) {
 
 export default function Navbar() {
     const Navigate = useNavigate()
-    const [navigation, setNavigation] = useState([{ name: 'Home', to: '/', current: true },
-    { name: 'Favourites', to: '/favourites', current: false },
+    const [navigation, setNavigation] = useState([
+        { name: 'Home', to: '/', current: true },
+        { name: 'Favourites', to: '/favourites', current: false },
     ])
     const handleLogOut = () => {
         if (localStorage.getItem('authToken')) {
@@ -25,10 +26,11 @@ export default function Navbar() {
         } else {
             Navigate('LogIn')
         }
+        handleClickItem('Home')
     }
-    const handleClickItem = (e) => {
+    const handleClickItem = (current) => {
         setNavigation(navigation.map((item) => {
-            if (item.name === e.target.textContent) {
+            if (item.name === current) {
                 return {
                     ...item,
                     current: true
@@ -42,7 +44,7 @@ export default function Navbar() {
         }))
     }
     return (
-        <div className=''>
+        <div className='sticky top-0 mx-12 lg:mx-16 xl:mx-20 '>
             <Toaster position="top-center"
                 reverseOrder={false}
                 gutter={8} />
@@ -74,7 +76,8 @@ export default function Navbar() {
                                                 <Link
                                                     key={item.name}
                                                     to={item.to}
-                                                    onClick={handleClickItem}
+                                                    onClick={(e)=>{
+                                                        handleClickItem(e.target.textContent)}}
                                                     className={classNames(
                                                         item.current ? 'bg-gray-900 text-white' : 'text-black hover:bg-gray-700 hover:text-white',
                                                         'rounded-md px-3 py-2 text-sm font-medium',

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
 
 function NewsItem({ article }) {
+    const [noImage, setNoImage] = useState("")
     const addTofavourites = async () => {
         if (!localStorage.getItem('authToken')) {
             return toast("Try loggin in first")
@@ -46,15 +47,15 @@ function NewsItem({ article }) {
                         <i className="fa-regular fa-heart fa-xl " style={{ "color": "#d42b2b" }}></i>
                     </div>
                     <div >
-                        <img className="rounded-t-lg aspect-video h-48 " src={article.urlToImage ? article.urlToImage : "noImage.jpg"} alt="" />
+                        <img className="rounded-t-lg aspect-video h-48 " src={article.urlToImage ? article.urlToImage : "noImageBlack.png"} alt="" />
                     </div>
-                    <div className="p-5 h-screen/2 flex flex-col justify-between">
+                    <div className="p-5 h-screen-55 flex flex-col justify-between">
                         <a href={article.url}>
                             <h5 className=" text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{
                                 heading.slice(0, 60) + "..."}</h5>
                         </a>
                         <div>
-                            <p className=" font-normal text-gray-700 dark:text-gray-400">{description ? description.slice(0,90)+"..." : "No description available"}</p>
+                            <p className=" font-normal text-gray-700 dark:text-gray-400">{description ? description.slice(0, 90) + "..." : "No description available"}</p>
                         </div>
                         <div className=' text-sm text-gray-500 dark:text-gray-400' >
                             <p className=''>On {onDate}</p>

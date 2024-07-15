@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import FavouriteContext from './NewsContext'
 
 function NewsState(props) {
+    
     const base_url = "https://newsapi.org/v2/"
     const apiKey = process.env.REACT_APP_API_KEY
     const [articles, setArticles] = useState([])

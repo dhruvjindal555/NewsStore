@@ -33,7 +33,7 @@ function Favourites() {
 
 
     return (
-        <div className='mx-28'>
+        <div className='mx-12 xl:mx-28 '>
             <Toaster position="top-center"
                 reverseOrder={false}
                 gutter={8} />
@@ -41,14 +41,13 @@ function Favourites() {
                 <h1 className='text-5xl font-semibold'>Favourites</h1>
             </div>
             <div>
-                <div className='grid gap-3 grid-cols-4 gap-y-5'>
+                <div className='grid gap-3 xl:grid-cols-4 grid-cols-3 gap-y-5'>
                     {articles ? articles.map((article) => {
                         return (
                             <FavouriteItem key={article.url} article={article} getFavourite={getFavourite} />
                         )
                     }) : "ARTICLES NOT AVAILABLE"}
                 </div>
-                    {/* <Results totalResults={articles.length}/> */}
                     <Pagination totalResults={articles.length}/>
             </div>
         </div>

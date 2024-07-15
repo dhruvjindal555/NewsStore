@@ -5,81 +5,79 @@ import toast, { Toaster } from 'react-hot-toast';
 import Pagination from './Pagination';
 import NewsContext from '../contexts/favourites/NewsContext';
 function LatestNews() {
-    const { 
-        page, 
-        setPage,
+    const {
+        page,
+        category,
         setCategory,
+        search,
         setSearch,
         totalResults,
-        category,
-        search,
         loading,
         fetchArticles,
         fetchQuery,
-    }= useContext(NewsContext)
-    
-  
-    const [categories] = useState(["General",
-        "Business",
-        "Entertainment",
-        "Health",
-        "Science",
-        "Sports",
-        "Technology"])
-   
-   
+    } = useContext(NewsContext)
+
+    const handleCategory = ((category = "", current = false) => {
+        setCategories(categories.map((item) => {
+            if (item.category === category) {
+                return {
+                    ...item,
+                    current: current
+                }
+            } else {
+                return {
+                    ...item,
+                    current: false
+                }
+            }
+        }))
+    })
+    const [categories, setCategories] = useState([
+        { category: "General", current: true },
+        { category: "Business", current: false },
+        { category: "Entertainment", current: false },
+        { category: "Health", current: false },
+        { category: "Science", current: false },
+        { category: "Sports", current: false },
+        { category: "Technology", current: false }])
+
     const handleSearch = () => {
+        handleCategory()
         if (search === "") {
             return toast("Try writing a search term")
         }
         fetchQuery(search)
     }
-    
+
     useEffect(() => {
         fetchArticles()
         // eslint-disable-next-line
     }, [category, page])
-   
-    const handlePrevClick=()=>{
-        setPage(page-1)
-        if(search === ""){
-            fetchArticles()
-        }else{
-            fetchQuery()
-        }
-    }
-    const handleNextClick=()=>{
-        setPage(page+1)
-        if(search === ""){
-            fetchArticles()
-        }else{
-            console.log("Search",search);
-            fetchQuery()
-        }
-    }
+
+
     return (
         <>
-            <div className='mx-28'>
+            <div className=' mx-12 xl:mx-28 '>
                 <div>
                     <Toaster position="top-center"
                         reverseOrder={false}
                         gutter={8} />
                 </div>
                 <div className='my-8'>
-                    <h1 className='text-5xl font-semibold'>Latest news - {category}</h1>
+                    <h1 className='text-5xl font-semibold'>Latest news - {search ? String(search.slice(0, 1)).toLocaleUpperCase() + search.slice(1) : category}</h1>
                 </div>
                 <div className='flex  justify-between my-5 items-center'>
-                    <div className='flex gap-2 '>
+                    <div className='flex gap-2 flex-wrap'>
                         {
-                            categories.map((element, index) => {
+                            categories.map((category, index) => {
                                 return (
                                     <div key={index} onClick={(e) => {
                                         setCategory(e.target.textContent)
+                                        handleCategory(e.target.textContent, true)
                                     }}
-                                     className='h-fit rounded-xl border-2 border-black active:border-gray-500 px-3 py-1 flex items-center cursor-pointer hover:border-gray-500
-                                    dark:text-white dark:border-gray-800'>
+                                        className={category.current ? "h-fit rounded-xl border-2 border-red-600 active:border-red-500 px-3 py-1 flex items-center cursor-pointer hover:border-red-500 dark:text-white dark:border-white" : 'h-fit rounded-xl border-2 border-black active:border-gray-500 px-3 py-1 flex items-center cursor-pointer hover:border-gray-500 dark:text-white dark:border-gray-800'}>
                                         <span>
-                                            {element}
+                                            {category.category}
                                         </span>
                                     </div>
                                 )
@@ -89,7 +87,7 @@ function LatestNews() {
                     <div className="flex rounded-md border-2 border-black overflow-hidden max-w-md font-[sans-serif]">
                         <input type="text" placeholder="Search Something..."
                             value={search}
-                            onChange={(e)=>{
+                            onChange={(e) => {
                                 setSearch(e.target.value)
                             }}
                             onKeyDown={(e) => {
@@ -115,11 +113,11 @@ function LatestNews() {
                 {
                     !loading &&
                     <>
-                        <News  />
+                        <News />
+                        <Pagination totalResults={totalResults} />
                     </>
                 }
                 {/* <Results totalResults={totalResults} page={page} /> */}
-                <Pagination totalResults={totalResults} page={page}  handlePrevClick={handlePrevClick} handleNextClick={handleNextClick}/>
             </div>
         </>
     )
