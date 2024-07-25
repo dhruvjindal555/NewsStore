@@ -52,7 +52,7 @@ function NewsState(props) {
     // Function to fetch articles based on a search query
     const fetchQuery = async () => {
         setCategory("General") // Reset category to "General"
-        let url = `https://cantilever-task-2.onrender.com/server/fecthQuery/${search}/${page}`
+        let url = `https://cantilever-task-2.onrender.com/server/fetchQuery/${search}/${page}`
         // let url = base_url+`everything?&q=${search}&apiKey=${apiKey}&page=${page}&pageSize=20`
         setLoading(true) 
         const response = await fetch(url) // Fetch articles based on search query
