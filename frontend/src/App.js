@@ -16,7 +16,7 @@ function App() {
       <NewsState>
         <Router>
           <div className="bg-my-gradient-1 dark:bg-my-gradient-2 min-h-screen">
-          <Navbar />
+            <Navbar />
             <Routes>
               <Route element={<SignUp />} path="/SignUp"></Route>
               <Route element={<LogIn />} path="/LogIn"></Route>

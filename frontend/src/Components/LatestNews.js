@@ -57,17 +57,36 @@ function LatestNews() {
 
     return (
         <>
-            <div className=' mx-12 xl:mx-28 '>
-                <div>
-                    <Toaster position="top-center"
-                        reverseOrder={false}
-                        gutter={8} />
-                </div>
-                <div className='my-8'>
-                    <h1 className='text-5xl font-semibold'>Latest news - {search ? String(search.slice(0, 1)).toLocaleUpperCase() + search.slice(1) : category}</h1>
+            <div className='mx-3 sm:mx-8 md:mx-12 xl:mx-28 '>
+               
+                <div className='my-3 sm:my-8'>
+                    <h1 className='text-3xl sm:text-5xl font-semibold'>Latest news - {search ? String(search.slice(0, 1)).toLocaleUpperCase() + search.slice(1) : category}</h1>
                 </div>
                 <div className='flex  justify-between my-5 items-center'>
-                    <div className='flex gap-2 flex-wrap'>
+
+                    <div className="lg:hidden">
+                        <select
+                            id="countries"
+                            className="bg-gray-50 border px-2 sm:px-4 sm:py-3 py-1.5 bg-opacity-50 border-black  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            onChange={(e) => {
+                                setCategory(e.target.value)
+                                handleCategory(e.target.value, true)
+                            }}>
+                            {
+                                categories.map((category, index) => {
+                                    
+                                        return (
+                                            <option key={index} defaultChecked={category.current}>
+                                                {category.category}
+                                            </option>
+                                        )
+                                    
+                                })
+                            }
+                        </select>
+                    </div>
+
+                    <div className='lg:flex gap-2 flex-wrap hidden '>
                         {
                             categories.map((category, index) => {
                                 return (
@@ -84,14 +103,14 @@ function LatestNews() {
                             })
                         }
                     </div>
-                    <div className="flex rounded-md border-2 border-black overflow-hidden max-w-md font-[sans-serif]">
+                    <div className="sm:flex rounded-md hidden border-2 border-black overflow-hidden max-w-md font-[sans-serif]">
                         <input type="text" placeholder="Search Something..."
                             value={search}
                             onChange={(e) => {
                                 setSearch(e.target.value)
                             }}
                             onKeyDown={(e) => {
-                                if (e.key === 13) {
+                                if (e.key === 'Enter') {
                                     console.log("Key pressed");
                                     handleSearch()
                                 }

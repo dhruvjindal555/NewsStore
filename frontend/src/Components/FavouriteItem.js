@@ -26,24 +26,24 @@ function FavouriteItem({ article, getFavourite }) {
     const onDate = new Date(Date.parse(article.publishedAt)).toDateString()
     return (
         <>
-            <div  className=' relative' key={article.url}>
-                <Toaster position="top-center" 
+            <div className=' relative' key={article.url}>
+                <Toaster position="top-center"
                     reverseOrder={false}
                     gutter={8} />
-                <div className="max-w-sm bg-transparent border border-gray-400 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
+                <div className="bg-transparent border border-gray-400 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
                     <div onClick={removeFromFavourites} className='border-2 absolute top-2 right-3 p-1 px-2 bg-white rounded-full hover:border-gray-500 hover:border-2 cursor-pointer'>
                         <i className="fa-solid fa-xmark fa-xl " style={{ "color": "#d42b2b" }}></i>
                     </div>
                     <div >
-                        <img className="rounded-t-lg aspect-video h-48 " src={article.urlToImage ? article.urlToImage : "noImageBlack.png"} alt="" />
+                        <img className="rounded-t-lg aspect-video h-48 w-full " src={article.urlToImage ? article.urlToImage : "noImageBlack.png"} alt="" />
                     </div>
-                    <div className="p-5 h-screen-55 flex flex-col justify-between">
+                    <div className="p-5 h-96  md:h-screen-55 hidden sm:flex flex-col justify-between">
                         <a href="/">
                             <h5 className=" text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{
                                 heading.slice(0, 60) + "..."}</h5>
                         </a>
                         <div>
-                            <p className=" font-normal text-gray-700 dark:text-gray-400">{description ? description.slice(0,90)+"..." : "No description available"}</p>
+                            <p className=" font-normal text-gray-700 dark:text-gray-400">{description ? description.slice(0, 90) + "..." : "No description available"}</p>
                         </div>
                         <div className='text-sm text-gray-500 dark:text-gray-400'>
                             <p>On {onDate}</p>
@@ -56,9 +56,22 @@ function FavouriteItem({ article, getFavourite }) {
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                             </svg>
                         </a>
-                        
-
                     </div>
+                    <a href={article.url} className="p-3 sm:p-5 h-1/2 sm:hidden flex flex-col justify-between">
+                        <div    >
+                            <h5 className=" text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{
+                                heading.slice(0, 20) + "..."}</h5>
+                        </div>
+                        <div className='my-1'>
+                            <p className=" font-normal text-gray-700 dark:text-gray-400">{description ? description.slice(0, 90) + "..." : "No description available"}</p>
+                        </div>
+                        <div className='my-1 text-sm text-gray-500 dark:text-gray-400' >
+                            <p className=''>On {onDate}</p>
+                            <p>Source : {article.source.name}</p>
+                            <p>Author : {article.author}</p>
+                        </div>
+                        
+                    </a>
                 </div>
             </div>
 

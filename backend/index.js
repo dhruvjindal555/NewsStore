@@ -9,6 +9,7 @@ app.use(express.json())
 app.use(cors())
 app.use('/auth', require('./Routes/auth'))
 app.use('/favourites', require('./Routes/fav'))
+app.use('/server', require('./Routes/server'))
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)

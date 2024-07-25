@@ -12,9 +12,9 @@ function ToggleButton() {
         }
     }
     return (
-        <div><div className=" mx-2  flex justify-center items-center ">
+        <div><div className="mx-1 sm:mx-2  flex justify-center items-center ">
             <button onClick={toggleTheme}
-                className="h-10 w-10 rounded-lg p-1 bg-gray-100 dark:bg-gray-700">
+                className="sm:h-10 h-8 sm:w-10 w-8 rounded-lg p-1 bg-gray-100 dark:bg-gray-700">
                 <svg className="fill-violet-700 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
                 </svg>

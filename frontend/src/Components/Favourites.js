@@ -7,7 +7,8 @@ function Favourites() {
     const [articles, setArticles] = useState([])
     const getFavourite = async () => {
         if (!localStorage.getItem('authToken')) {
-            return toast("Please login to view your favourites")
+            console.log("Please login to view your favourites")
+            return 
         }
         const url = `http://localhost:8888/favourites`
         const response = await fetch(url, {
@@ -33,16 +34,14 @@ function Favourites() {
 
 
     return (
-        <div className='mx-12 xl:mx-28 '>
-            <Toaster position="top-center"
-                reverseOrder={false}
-                gutter={8} />
+        <div className='mx-3 sm:mx-8 md:mx-12 xl:mx-28 '>
+            
             <div className='my-8'>
                 <h1 className='text-5xl font-semibold'>Favourites</h1>
             </div>
             <div>
-                <div className='grid gap-3 xl:grid-cols-4 grid-cols-3 gap-y-5'>
-                    {articles ? articles.map((article) => {
+                <div className='sm:grid sm:gap-3 xl:grid-cols-4 lg:grid-cols-3 grid-cols-2 gap-y-5 flex flex-col gap-1  '>
+                    {articles.length>0 ? articles.map((article) => {
                         return (
                             <FavouriteItem key={article.url} article={article} getFavourite={getFavourite} />
                         )

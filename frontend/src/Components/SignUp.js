@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import toast, { Toaster } from 'react-hot-toast';
 import {
     Link,
     useNavigate
@@ -33,15 +34,21 @@ function SignUp() {
                 localStorage.setItem("authToken", authToken)
                 navigate('/')
                 console.log(message);
+                toast(message)
             } else {
+                toast(message)
                 console.log(message);
             }   
         }else{
             console.log("Passwords are not matching ");
+            toast("Passwords are not matching ");
         }
     }
     return (
         <section className=" mt-12">
+             <Toaster position="top-center"
+                reverseOrder={false}
+                gutter={8} />
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
 
                 <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import toast, { Toaster } from 'react-hot-toast';
 
 function NewsItem({ article }) {
-    const [noImage, setNoImage] = useState("")
     const addTofavourites = async () => {
         if (!localStorage.getItem('authToken')) {
             return toast("Try loggin in first")
@@ -39,17 +38,15 @@ function NewsItem({ article }) {
     return (
         <>
             <div className=' relative ' >
-                <Toaster position="top-center"
-                    reverseOrder={false}
-                    gutter={8} />
-                <div className="max-w-sm  border border-gray-400 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
+              
+                <div className="  border border-gray-400 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
                     <div onClick={addTofavourites} className='border-2 absolute top-2 right-3 p-1 bg-white rounded-full hover:border-gray-500 hover:border-2 cursor-pointer'>
                         <i className="fa-regular fa-heart fa-xl " style={{ "color": "#d42b2b" }}></i>
                     </div>
                     <div >
-                        <img className="rounded-t-lg aspect-video h-48 " src={article.urlToImage ? article.urlToImage : "noImageBlack.png"} alt="" />
+                        <img className="rounded-t-lg aspect-video object-cover h-40 sm:h-48 w-full " src={article.urlToImage ? article.urlToImage : "noImageBlack.png"} alt="" />
                     </div>
-                    <div className="p-5 h-screen-55 flex flex-col justify-between">
+                    <div className="p-5 h-96  md:h-screen-55 hidden sm:flex flex-col justify-between">
                         <a href={article.url}>
                             <h5 className=" text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{
                                 heading.slice(0, 60) + "..."}</h5>
@@ -69,6 +66,21 @@ function NewsItem({ article }) {
                             </svg>
                         </a>
                     </div>
+                    <a href={article.url} className="p-3 sm:p-5 h-1/2 sm:hidden flex flex-col justify-between">
+                        <div>
+                            <h5 className=" text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{
+                                heading.slice(0, 20) + "..."}</h5>
+                        </div>
+                        <div className='my-1'>
+                            <p className=" font-normal text-gray-700 dark:text-gray-400">{description ? description.slice(0, 90) + "..." : "No description available"}</p>
+                        </div>
+                        <div className='my-1 text-sm text-gray-500 dark:text-gray-400' >
+                            <p className=''>On {onDate}</p>
+                            <p>Source : {article.source.name}</p>
+                            <p>Author : {article.author}</p>
+                        </div>
+                    </a>
+
                 </div>
             </div>
 

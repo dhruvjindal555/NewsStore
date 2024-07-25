@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState,useEffect } from 'react'
 import NewsContext from '../contexts/favourites/NewsContext'
 
 function Pagination({totalResults}) {
     const {
         page,
-        setPage,
+        setPage,    
         search,
         fetchArticles,
         fetchQuery,
@@ -24,30 +24,30 @@ function Pagination({totalResults}) {
         console.log(pageStart, pageEnd);
     }
     const handleNext = () => {
-        console.log(pageStart, pageEnd);
         setPage(page + 1)
+
+        setPageStart(20*(page-1));
+        setPageEnd(20*page);
         if (search === "") {
             fetchArticles()
         } else {
             console.log("Search", search);
             fetchQuery()
         }
-        setPageStart(pageStart + pageEnd)
-        setPageEnd(pageEnd + 20)
-        if (pageEnd > totalResults) {
-            setPageEnd(totalResults)
-        }
-        console.log(pageStart, pageEnd);
+        // if (pageEnd > totalResults) {
+        //     setPageEnd(totalResults)
+        // }
+        console.log("pageStart",pageStart, "pageEnd",pageEnd);
     }
-
+  
 
     return (
 
         <div className="flex items-center justify-between   bg-transparent px-4 py-3 sm:px-6" >
 
             <div className="flex flex-1 justify-between sm:hidden">
-                <div className="relative inline-flex items-center rounded-md border  bg-tranparent px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</div>
-                <div className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</div>
+                <button disabled={pageStart === 1} onClick={handlePrevious} className="relative inline-flex items-center rounded-md border  bg-tranparent px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</button>
+                <button disabled={pageEnd === totalResults} onClick={handleNext} className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</button>
             </div>
             <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
                 <div>

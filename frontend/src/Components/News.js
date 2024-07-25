@@ -6,8 +6,8 @@ function News() {
     const {articles}= useContext(NewsContext)
     return (
         <div>
-            <div className='grid gap-3 xl:grid-cols-4 grid-cols-3 gap-y-5 '>
-                {articles?articles.map((article) => {
+            <div className='sm:grid sm:gap-3 xl:grid-cols-4 lg:grid-cols-3 grid-cols-2 gap-y-5 flex flex-col gap-1  '>
+                {articles.length>0?articles.map((article) => {
                     return (
                         <NewsItem key={article.url} article={article}/>
                     )
