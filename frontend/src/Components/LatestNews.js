@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react'
-import News from './News'
-import Spinner from './Spinner'
+import React, { useState, useEffect, useContext } from 'react';
+import News from './News';
+import Spinner from './Spinner';
 import toast, { Toaster } from 'react-hot-toast';
 import Pagination from './Pagination';
 import NewsContext from '../contexts/favourites/NewsContext';
+
 function LatestNews() {
+    // Destructuring state and functions from NewsContext
     const {
         page,
         category,
@@ -15,8 +17,9 @@ function LatestNews() {
         loading,
         fetchArticles,
         fetchQuery,
-    } = useContext(NewsContext)
+    } = useContext(NewsContext);
 
+    // Function to handle category selection and update category state
     const handleCategory = ((category = "", current = false) => {
         setCategories(categories.map((item) => {
             if (item.category === category) {
@@ -30,8 +33,10 @@ function LatestNews() {
                     current: false
                 }
             }
-        }))
-    })
+        }));
+    });
+
+    // Initial categories state
     const [categories, setCategories] = useState([
         { category: "General", current: true },
         { category: "Business", current: false },
@@ -39,60 +44,61 @@ function LatestNews() {
         { category: "Health", current: false },
         { category: "Science", current: false },
         { category: "Sports", current: false },
-        { category: "Technology", current: false }])
+        { category: "Technology", current: false }
+    ]);
 
+    // Function to handle search input and fetch articles based on the search term
     const handleSearch = () => {
-        handleCategory()
+        handleCategory();
         if (search === "") {
-            return toast("Try writing a search term")
+            return toast("Try writing a search term");
         }
-        fetchQuery(search)
-    }
+        fetchQuery(search);
+    };
 
+    // useEffect hook to fetch articles on category or page change
     useEffect(() => {
-        fetchArticles()
+        fetchArticles();
         // eslint-disable-next-line
-    }, [category, page])
-
+    }, [category, page]);
 
     return (
         <>
-            <div className='mx-3 sm:mx-8 md:mx-12 xl:mx-28 '>
-               
+            <div className='mx-3 sm:mx-8 md:mx-12 xl:mx-28'>
                 <div className='my-3 sm:my-8'>
-                    <h1 className='text-3xl sm:text-5xl font-semibold'>Latest news - {search ? String(search.slice(0, 1)).toLocaleUpperCase() + search.slice(1) : category}</h1>
+                    <h1 className='text-3xl sm:text-5xl font-semibold'>
+                        Latest news - {search ? String(search.slice(0, 1)).toLocaleUpperCase() + search.slice(1) : category}
+                    </h1>
                 </div>
-                <div className='flex  justify-between my-5 items-center'>
-
+                <div className='flex justify-between my-5 items-center'>
+                    {/* Dropdown for categories on small screens */}
                     <div className="lg:hidden">
                         <select
                             id="countries"
-                            className="bg-gray-50 border px-2 sm:px-4 sm:py-3 py-1.5 bg-opacity-50 border-black  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="bg-gray-50 border px-2 sm:px-4 sm:py-3 py-1.5 bg-opacity-50 border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             onChange={(e) => {
-                                setCategory(e.target.value)
-                                handleCategory(e.target.value, true)
+                                setCategory(e.target.value);
+                                handleCategory(e.target.value, true);
                             }}>
                             {
                                 categories.map((category, index) => {
-                                    
-                                        return (
-                                            <option key={index} defaultChecked={category.current}>
-                                                {category.category}
-                                            </option>
-                                        )
-                                    
+                                    return (
+                                        <option key={index} defaultChecked={category.current}>
+                                            {category.category}
+                                        </option>
+                                    )
                                 })
                             }
                         </select>
                     </div>
-
-                    <div className='lg:flex gap-2 flex-wrap hidden '>
+                    {/* Categories displayed as buttons on larger screens */}
+                    <div className='lg:flex gap-2 flex-wrap hidden'>
                         {
                             categories.map((category, index) => {
                                 return (
                                     <div key={index} onClick={(e) => {
-                                        setCategory(e.target.textContent)
-                                        handleCategory(e.target.textContent, true)
+                                        setCategory(e.target.textContent);
+                                        handleCategory(e.target.textContent, true);
                                     }}
                                         className={category.current ? "h-fit rounded-xl border-2 border-red-600 active:border-red-500 px-3 py-1 flex items-center cursor-pointer hover:border-red-500 dark:text-white dark:border-white" : 'h-fit rounded-xl border-2 border-black active:border-gray-500 px-3 py-1 flex items-center cursor-pointer hover:border-gray-500 dark:text-white dark:border-gray-800'}>
                                         <span>
@@ -103,16 +109,17 @@ function LatestNews() {
                             })
                         }
                     </div>
+                    {/* Search input */}
                     <div className="sm:flex rounded-md hidden border-2 border-black overflow-hidden max-w-md font-[sans-serif]">
                         <input type="text" placeholder="Search Something..."
                             value={search}
                             onChange={(e) => {
-                                setSearch(e.target.value)
+                                setSearch(e.target.value);
                             }}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
                                     console.log("Key pressed");
-                                    handleSearch()
+                                    handleSearch();
                                 }
                             }}
                             className="outline-none bg-gray-200 text-gray-600 text-sm px-4 py-3" />
@@ -127,7 +134,7 @@ function LatestNews() {
                     </div>
                 </div>
                 {
-                    loading && <Spinner className='' />
+                    loading && <Spinner />
                 }
                 {
                     !loading &&
@@ -136,10 +143,9 @@ function LatestNews() {
                         <Pagination totalResults={totalResults} />
                     </>
                 }
-                {/* <Results totalResults={totalResults} page={page} /> */}
             </div>
         </>
-    )
+    );
 }
 
-export default LatestNews
+export default LatestNews;
