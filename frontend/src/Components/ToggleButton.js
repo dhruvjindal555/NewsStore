@@ -1,24 +1,25 @@
 import React from 'react'
 
 function ToggleButton() {
-    // Function to toggle between light and dark themes
+
+   
     const toggleTheme = () => {
-        console.log("theme clicked"); // Log when the theme button is clicked
+        console.log("theme clicked");
         if (document.body.classList.contains('light')) {
-            document.body.classList.remove('light'); // Remove 'light' class if present
-            document.body.classList.add('dark'); // Add 'dark' class
+            document.body.classList.remove('light');
+            document.body.classList.add('dark');
         } else {
-            document.body.classList.remove('dark'); // Remove 'dark' class if present
-            document.body.classList.add('light'); // Add 'light' class
+            document.body.classList.remove('dark');
+            document.body.classList.add('light');
         }
-    }
+    };
 
     return (
         <div>
             <div className="mx-1 sm:mx-2 flex justify-center items-center ">
                 {/* Button to toggle the theme */}
                 <button onClick={toggleTheme}
-                    className="sm:h-10 h-8 sm:w-10 w-8 rounded-lg p-1 bg-gray-100 dark:bg-gray-700">
+                    className="sm:h-10 h-8 sm:w-10 w-8 rounded-lg p-1 ">
                     {/* Sun icon (light theme) */}
                     <svg className="fill-violet-700 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>

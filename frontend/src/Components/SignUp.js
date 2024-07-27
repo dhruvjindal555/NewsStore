@@ -27,7 +27,7 @@ function SignUp() {
         // Check if password and confirm password match
         if (credentials.password === credentials.confirmPassword) {
             // Send POST request to signup endpoint
-            const response = await fetch("http://localhost:8888/auth/signup", {
+            const response = await fetch("https://cantilever-task-2.onrender.com/auth/signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

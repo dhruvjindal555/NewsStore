@@ -5,15 +5,15 @@ import toast, { Toaster } from 'react-hot-toast';
 import NewsContext from '../contexts/favourites/NewsContext';
 import { Link, useNavigate } from "react-router-dom";
 import ToggleButton from './ToggleButton';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-gsap.registerPlugin(useGSAP);
+
+
 // Utility function to join class names conditionally
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
 export default function Navbar() {
+  
     const navRef = useRef(null)
     const { search, setSearch, fetchQuery } = useContext(NewsContext); // Extracting context values
     const Navigate = useNavigate(); // Hook for navigation
@@ -30,9 +30,9 @@ export default function Navbar() {
             toast('Logged out successfully');
             Navigate('/');
         } else {
-            Navigate('LogIn');
+            handleClickItem('Home');
+            return Navigate('LogIn');
         }
-        handleClickItem('Home');
     }
 
     // Function to handle search query
@@ -46,7 +46,7 @@ export default function Navbar() {
     // Function to handle navigation item click
     const handleClickItem = (current) => {
         if (current === 'Favourites' && !window.localStorage.getItem('authToken')) {
-            window.location.href = '/';
+
             toast("Please login to access your favorites");
         }
         setNavigation(navigation.map((item) => {
@@ -64,9 +64,10 @@ export default function Navbar() {
         }));
     }
 
-    
+
     return (
-        <div ref={navRef} className='sticky top-0 mx-2 sm:mx-8 md:mx-12 lg:mx-16 xl:mx-20 z-10'>
+        <div ref={navRef} 
+        className='sticky top-0 px-1 sm:px-8 md:px-12 lg:px-16 xl:px-20 z-10 bg-my-gradient-1 dark:bg-my-gradient-2'>
             <Toaster position="top-center" reverseOrder={false} gutter={8} /> {/* Toast notifications */}
             <Disclosure as="nav" className="">
                 {({ open }) => (
@@ -86,7 +87,7 @@ export default function Navbar() {
                                     </DisclosureButton>
                                 </div>
                                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                                    <a href='/' className="flex flex-shrink-0 dark:text-white items-center">
+                                    <a href='/' className="flex ml-2 flex-shrink-0 dark:text-white items-center">
                                         <span className='text-3xl font-semibold'>NewsStore</span>
                                     </a>
                                     <div className="hidden sm:ml-6 sm:block">
@@ -126,7 +127,7 @@ export default function Navbar() {
                                 {navigation.map((item) => (
                                     <Link
                                         key={item.name}
-                                        to={item.to}
+                                        // to={item.to}
                                         onClick={(e) => {
                                             handleClickItem(e.target.textContent);
                                         }}

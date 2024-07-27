@@ -26,7 +26,7 @@ function LogIn() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Send POST request to login endpoint
-        const response = await fetch("http://localhost:8888/auth/login", {
+        const response = await fetch("https://cantilever-task-2.onrender.com/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

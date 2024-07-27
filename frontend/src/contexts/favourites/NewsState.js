@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import FavouriteContext from './NewsContext'
+import NewsContext from './NewsContext'
 
 function NewsState(props) {
 
@@ -75,7 +75,7 @@ function NewsState(props) {
     }
 
     return (
-        <FavouriteContext.Provider value={{
+        <NewsContext.Provider value={{
             articles,
             page,
             setPage,
@@ -89,7 +89,7 @@ function NewsState(props) {
             fetchQuery,
         }} >
             {props.children}
-        </FavouriteContext.Provider>
+        </NewsContext.Provider>
     )
 }
 

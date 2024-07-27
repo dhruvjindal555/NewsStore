@@ -4,7 +4,7 @@ import toast, { Toaster } from 'react-hot-toast';
 function FavouriteItem({ article, getFavourite }) {
     // Function to remove an article from favorites
     const removeFromFavourites = async () => {
-        const url = `http://localhost:8888/favourites/remove/${article._id}`;
+        const url = `https://cantilever-task-2.onrender.com/favourites/remove/${article._id}`;
         const response = await fetch(url, {
             method: 'DELETE',
             headers: {

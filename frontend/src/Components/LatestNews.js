@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import News from './News';
 import Spinner from './Spinner';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import Pagination from './Pagination';
 import NewsContext from '../contexts/favourites/NewsContext';
 

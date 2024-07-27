@@ -1,5 +1,5 @@
 import React from 'react'
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 function NewsItem({ article }) {
     const addToFavourites = async () => {
@@ -9,7 +9,7 @@ function NewsItem({ article }) {
         }
 
         // Define the URL for adding favourites
-        const url = `http://localhost:8888/favourites/add`
+        const url = `https://cantilever-task-2.onrender.com/favourites/add`
 
         // Send POST request to add the article to favourites
         const response = await fetch(url, {
@@ -72,7 +72,7 @@ function NewsItem({ article }) {
                             <p>Source: {article.source.name}</p>
                             <p>Author: {article.author}</p>
                         </div>
-                        <a href={article.url} target='_blank' className="flex justify-between items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-600 dark:focus:ring-blue-700">
+                        <a href={article.url} rel="noreferrer" target='_blank' className="flex justify-between items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-600 dark:focus:ring-blue-700">
                             Read more
                             <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
